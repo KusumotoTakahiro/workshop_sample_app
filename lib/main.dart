@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:workshop_sample_app/pages/titlepage.dart';
+import 'package:provider/provider.dart';
+import 'package:workshop_sample_app/providers/room.dart';
+import 'package:workshop_sample_app/providers/comment.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => RoomProvider()),
+        ChangeNotifierProvider(create: (_) => CommentProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

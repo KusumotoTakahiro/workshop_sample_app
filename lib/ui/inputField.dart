@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:workshop_sample_app/models/room.dart';
+import 'package:workshop_sample_app/providers/comment.dart';
 
 class InputField extends StatefulWidget {
-  const InputField({super.key});
+  final Room room;
+  const InputField({super.key, required this.room});
 
   @override
   _InputFieldState createState() => _InputFieldState();
@@ -11,8 +15,17 @@ class _InputFieldState extends State<InputField> {
   final String myname = 'じろう';
   final TextEditingController controller = TextEditingController();
 
-  sendText(text) {
-    print(text);
+  sendText(String text) {
+    final provider = Provider.of<CommentProvider>(context, listen: false);
+    if (provider == null) {
+      return;
+    }
+
+    provider.addCommentProvider(widget.room.uuid, text, myname).then((_) {
+      print('Comment added successfully');
+    }).catchError((error) {
+      print('Failed to add comment: $error');
+    });
   }
 
   @override
@@ -56,7 +69,7 @@ class _InputFieldState extends State<InputField> {
                   sendText(controller.text);
                   controller.clear();
                   // キーボード入力後キーボードを自動で閉じる処理.
-                  // FocusScope.of(context).unfocus();
+                  FocusScope.of(context).unfocus();
                 }
               },
               child: Container(

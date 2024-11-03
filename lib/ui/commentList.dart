@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:workshop_sample_app/models/comment.dart';
 
 class CommentList extends StatefulWidget {
-  const CommentList({super.key});
+  final List<Comment> comments;
+  const CommentList({super.key, required this.comments});
 
   @override
   _CommentListState createState() => _CommentListState();
 }
 
 class _CommentListState extends State<CommentList> {
-  final List<Map<String, dynamic>> commnets = [
-    {
-      'talker': 'たろう',
-      'room': '1',
-      'body':
-          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'created_at': '2024/11/03',
-      'uuid': '1'
-    },
-    {
-      'talker': 'たろう',
-      'room': '1',
-      'body': 'こんにちは',
-      'created_at': '2024/11/03',
-      'uuid': '2'
-    },
-    {
-      'talker': 'じろう',
-      'room': '1',
-      'body': 'こんにちは',
-      'created_at': '2024/11/03',
-      'uuid': '3'
-    },
-  ];
+  // final List<Map<String, dynamic>> commnets = [
+  //   {
+  //     'talker': 'たろう',
+  //     'room': '1',
+  //     'body':
+  //         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  //     'created_at': '2024/11/03',
+  //     'uuid': '1'
+  //   },
+  //   {
+  //     'talker': 'たろう',
+  //     'room': '1',
+  //     'body': 'こんにちは',
+  //     'created_at': '2024/11/03',
+  //     'uuid': '2'
+  //   },
+  //   {
+  //     'talker': 'じろう',
+  //     'room': '1',
+  //     'body': 'こんにちは',
+  //     'created_at': '2024/11/03',
+  //     'uuid': '3'
+  //   },
+  // ];
   final String myname = 'じろう';
 
   Widget _buildComment({
@@ -97,14 +99,14 @@ class _CommentListState extends State<CommentList> {
       child: SizedBox(
         height: 600, // 必要に応じて高さを指定
         child: ListView.builder(
-          itemCount: commnets.length,
+          itemCount: widget.comments.length,
           itemBuilder: (context, index) {
             return Container(
-              key: ValueKey(commnets[index]['uuid']),
+              key: ValueKey(widget.comments[index].uuid),
               child: _buildComment(
-                talker: commnets[index]['talker'],
-                body: commnets[index]['body'],
-                date: commnets[index]['created_at'],
+                talker: widget.comments[index].talker,
+                body: widget.comments[index].body,
+                date: widget.comments[index].createdAt,
               ),
             );
           },
